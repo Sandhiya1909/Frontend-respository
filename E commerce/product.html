@@ -293,13 +293,15 @@ body {
   position: relative;
   width: 100%;
   height: auto;
-  aspect-ratio: 3 / 1; /* Maintain proper aspect ratio (optional) */
+  aspect-ratio: 3 / 1; /*Maintain proper aspect ratio (optional) */
+  
 }
 
 .hero-slide {
   display: flex;
   width: 300%;
   animation: slide 15s infinite;
+  
 }
 
 .hero-item {
@@ -311,7 +313,7 @@ body {
   width: 100%;
   height: auto;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
   image-rendering: 50%;/* Try crisp edges or high quality depending on need */
   max-height: 200%;
 }
