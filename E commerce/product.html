@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ethernet Cables</title>
+
+<style>
+    /* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #002244 ;
+  color: #08308c;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #003366;
+  color: white;
+  padding: 1rem 2rem;
+}
+
+.navbar-left .profile-icon {
+  margin-right: 1rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.search-input {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 20px;
+  width: 250px;
+  max-width: 100%;
+  outline: none;
+  justify-content: space-between;
+  font-size: 1rem;
+  align-items: center;
+} 
+
+.signup-btn {
+  background: #00bfff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.signup-btn:hover {
+  background: #009acd;
+}
+
+.close-cart {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #888;
+}
+
+.close-cart:hover {
+  color: #e74c3c;
+}
+
+.cart-sidebar {
+  position: fixed;
+  top: 60px;
+  right: -100%;
+  width: 320px;
+  height: calc(100% - 60px);
+  background: #fff;
+  border-left: 1px solid #ddd;
+  box-shadow: -3px 0 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  z-index: 999;
+  transition: right 0.3s ease;
+}
+
+.cart-sidebar.open {
+  right: 0;
+}
+
+/* Header */
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+  background-color: #f9f9f9;
+}
+
+.close-cart {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #888;
+}
+
+.close-cart:hover {
+  color: #00bfff;
+}
+
+/* Cart Items List */
+.cart-items-list {
+  flex: 1;
+  list-style: none;
+  margin: 0;
+  padding: 0 1rem;
+  overflow-y: auto;
+}
+
+.cart-items-list li {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.cart-items-list li.empty-message {
+  text-align: center;
+  color: #aaa;
+  font-style: italic;
+  margin-top: 2rem;
+}
+
+/* Cart Item Image */
+.cart-item img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+
+/* Cart Item Details + Controls */
+.cart-item-details {
+  flex: 1;
+  overflow: hidden;
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.cart-item-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Quantity Controls */
+.cart-item-controls button {
+  background: #00bfff;
+  border: none;
+  padding: 4px 8px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 4px;
+  color: white;
+}
+
+.cart-item-controls button:hover {
+  background-color: #00bfff;
+}
+
+.cart-item-controls span {
+  min-width: 20px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 18px;
+  color: #00bfff;
+}
+
+/* Remove Button */
+.cart-item-controls button.remove-btn {
+  background-color: #00bfff;
+  color: white;
+  padding: 4px 6px;
+  font-size: 13px;
+  border-radius: 4px;
+  border: none;
+}
+
+.cart-item-controls button.remove-btn:hover {
+  background-color: #00bfff;
+}
+
+/* Cart Total */
+.cart-total {
+  padding: 1rem;
+  border-top: 1px solid #ddd;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #222;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Sticky Footer with Order Button */
+.cart-footer {
+  padding: 1rem;
+  border-top: 1px solid #eee;
+  background: #00bfff;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+
+.order-now-btn {
+  width: 100%;
+  background-color: #27ae60;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.order-now-btn:hover {
+  background-color: #219150;
+}
+
+
+/* Notification */
+.Notification {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(30px);
+  background: #00bfff;
+  color: #fff;
+  align-items: center;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-weight: bold;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 9999;
+}
+
+.Notification.show {
+  visibility: visible;
+  animation: slideUpFadeIn 0.4s ease-out forwards;
+}
+
+.Notification.hide {
+  animation: slideDownFadeOut 0.4s ease-in forwards;
+}
+
+@keyframes slideUpFadeIn {
+  0% {
+    transform: translateX(-50%) translateY(30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDownFadeOut {
+  0% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) translateY(30px);
+    opacity: 0;
+  }
+}
+.hero-slider {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 1; /* Maintain proper aspect ratio (optional) */
+}
+
+.hero-slide {
+  display: flex;
+  width: 300%;
+  animation: slide 15s infinite;
+}
+
+.hero-item {
+  position: relative;
+  flex: 0 0 100%;
+}
+
+.hero-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  image-rendering: 50%;/* Try crisp edges or high quality depending on need */
+  max-height: 200%;
+}
+
+.hero-text {
+  position: absolute;
+  bottom: 20px;
+  left: 40px;
+  font-size: 2rem;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 12px 20px;
+  border-radius: 8px;
+}
+
+
+.dots {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.dot {
+  height: 14px;
+  width: 14px;
+  margin: 0 6px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.dot.active {
+  background-color: #333;
+} 
+
+/* Page Header */
+.page-header {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: #eef6ff;
+}
+
+.page-header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.page-header p {
+  color: #fff;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #fff;
+  flex-wrap: wrap;
+}
+
+.controls select {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* Slider/Grid container for main items */
+.slider {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.slider::-webkit-scrollbar {
+  height: 8px;
+}
+
+.slider::-webkit-scrollbar-thumb {
+  background: #bbb;
+  border-radius: 4px;
+}
+
+/* Item Cards */
+.item-card {
+  min-width: 220px;
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.item-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.item-card h4 {
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.item-card p {
+  font-size: 0.9rem;
+  color:#555;
+}
+
+.item-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  padding: 2rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.modal-content img {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.modal-content h2 {
+  margin-bottom: 0.5rem;
+}
+
+.modal-content p {
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+.close-btn {
+  background: #003366;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.close-btn:hover {
+  background: #002244;
+}
+
+.cart-icon {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cart-icon button {
+  background-color: white;
+  color:#00bfff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+}
+
+close-btn {
+  background: #003366;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.close-btn:hover {
+  background: #002244;
+}
+
+#cartCount {
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 4px 8px;
+  border-radius: 50%;
+  min-width: 24px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.cart-icon span {
+  background: red;
+  color: whitesmoke;
+  border-radius: 50%;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+}
+.total-footer {
+  background-color: #f9f9f9;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: right;
+  border-top: 2px solid #00bfff;
+  margin-top: 2rem;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+}
+
+
+/* ===== Footer Section ===== */
+.footer {
+    background: #00bfff;
+    color: white;
+    padding: 40px 12%;
+}
+
+.footer center div a {
+    font-size: 30px;
+    color: white;
+    margin: 0 15px;
+    transition: 0.3s ease;
+}
+
+.footer center div a:hover {
+    color: brown;
+}
+
+.footer ul.list {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    padding-bottom: 20px;
+}
+
+.footer ul.list li a {
+    color: white;
+    font-weight: 400;
+    text-decoration: underline;
+    transition: 0.3s ease;
+}
+
+.footer ul.list li a:hover {
+    color: brown;
+}
+
+.footer p.copyright {
+    text-align: center;
+    font-weight: 600;
+}
+
+
+.alert-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #00bfff;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 2000;
+  pointer-events: none;
+}
+
+.alert-box.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+#cartItems {
+  list-style: none;
+  margin: 1rem 0;
+  padding: 0;
+}
+
+#cartItems li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+#closeCart {
+  background-color:#00bfff; ;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 20%;
+  margin-top: 1rem;
+}
+
+@media(max-width: 450px) {
+      .container {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-left">
+      <span class="profile-icon"><img src ='logo.png' alt="logo"> <h1>Smart Shop</h1></span>
+      <span class="logo"> </span>
+    </div>
+    <div class="navbar-center"> <input type="text" placeholder="🔍Search for items..." class="search-input"></div>
+    <div class="navbar-right">
+      <button class="signup-btn">Sign Up</button>
+    </div>
+    <div class="cart-icon" id="cartToggle">
+      <button>CART🛒</button>
+       <span id="cartCount">0</span>
+    </div>
+  </nav>
+  <!-- Sliding Home Section -->
+<section class="hero-slider">
+  <div class="hero-slide track">
+    <div class="hero-item">
+      <img src="cablet.jpg" alt="Ethernet Speed" />
+      <div class="hero-text">Experience Lightning-Fast Connectivity</div>
+    </div>
+    <div class="hero-item">
+      <img src="cable2.jpg" alt="Cat7 Cables" />
+      <div class="hero-text">Premium Quality Cat7 Cables Now Available</div>
+    </div>
+    <div class="hero-item">
+      <img src="cable3.jpg" alt="Cat5 Cables" />
+      <div class="hero-text">Affordable Cat5 Options for Home Use</div>
+    </div>
+  </div>
+</section>
+
+<!-- Dots for Slide Navigation -->
+<div class="dots">
+  <span class="dot active" onclick="currentSlide(0)"></span>
+  <span class="dot" onclick="currentSlide(1)"></span>
+  <span class="dot" onclick="currentSlide(2)"></span>
+</div>
+
+  <!-- Main Content -->
+  <main>
+    <div class="controls">
+      <select id="filter">
+        <option value="All">All Types</option>
+        <option value="Cat5">Cat5</option>
+        <option value="Cat6">Cat6</option>
+        <option value="Cat7">Cat7</option>
+      </select>
+      <select id="sort">
+        <option value="asc">Price: Low to High</option>
+        <option value="desc">Price: High to Low</option>
+      </select>
+    </div>
+
+    <div class="slider" id="itemContainer">
+      <!-- Item cards will be inserted here -->
+    </div>
+  </main>
+
+  <!-- Modal for item details -->
+  <div class="modal" id="modal">
+    <div class="modal-content" id="modalContent"></div>
+  </div>
+
+  <!-- Cart Sidebar -->
+   
+   <!-- <button id="cartToggle">Open cart</button> -->
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h2>Your Cart</h2>
+      <button id="closeCart" class="close-cart">&times;</button>
+    </div>
+    <ul id="cartItems" class="cart-items-list">
+      <li class="empty-message">Your cart is empty</li>
+    </ul>
+    <div id="cart-total" class="cart-total">
+      <p>Total:</p>
+      <span>₹<span id="totalPrice">0.00</span></span>
+      <button id="orderNowBtn">Order Now</button>
+    </div>
+  </div>
+
+  <!-- Cart Notification -->
+  <div id="CartNotification" class="Notification">Item added to cart ✅</div>
+
+  <!-- Footer Section -->
+    <footer class="footer">
+            <div>
+                <a href="https://www.instagram.com/itz_nivetha_.here/" target="_blank" rel="noopener"><i
+                        class="fa-brands fa-instagram"></i></a>
+                <a href="https://web.telegram.org/k/" target="_blank" rel="noopener"><i
+                        class="fa-brands fa-telegram"></i></a>
+            </div>
+        <br>
+        <u>
+            <ul class="list">
+                <li><a href="#">Service</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </u>
+      <p>&copy; 2025 NetCables Inc. | All Rights Reserved</p>
+      <p>Contact: support@netcables.com | Phone: +91-123-456-7890</p>
+    </footer>
+
+    <script>
+   
+document.addEventListener('DOMContentLoaded', () => {
+  // Slide logic
+  const slides = document.querySelectorAll('.hero-item');
+  const dots = document.querySelectorAll('.dot');
+  let currentIndex = 0;
+
+  function showSlide(index) {
+    const slideContainer = document.querySelector('.hero-slide');
+    slideContainer.style.transition = 'transform 0.5s ease-in-out';
+    slideContainer.style.transform = `translateX(-${index * 100}%)`;
+
+    dots.forEach(dot => dot.classList.remove('active'));
+    dots[index].classList.add('active');
+    currentIndex = index;
+  }
+
+  function currentSlide(index) {
+    showSlide(index);
+    clearInterval(autoSlideInterval);
+    autoSlideInterval = setInterval(nextSlide, 5000);
+  }
+
+  function nextSlide() {
+    let newIndex = (currentIndex + 1) % slides.length;
+    showSlide(newIndex);
+  }
+
+  let autoSlideInterval = setInterval(nextSlide, 5000);
+  showSlide(0);
+
+  // Product Data
+  // script.js
+const mockData = [
+  { id: 1, name: 'Ethernet Cable Cat5 - 1m', type: 'Cat5', price: 160, desc: 'High-quality Cat5 cable, ideal for home use.', image: 'cat51.jpg' },
+  { id: 2, name: 'Ethernet Cable Cat6 - 2m', type: 'Cat6', price: 170, desc: 'Durable Cat6 cable for office networks.', image: 'cat61.jpg' },
+  { id: 3, name: 'Ethernet Cable Cat7 - 3m', type: 'Cat7', price: 180, desc: 'Shielded Cat7 for high-speed data transfer.', image: 'cat71.jpg' },
+  { id: 4, name: 'Ethernet Cable Cat5 - 4m', type: 'Cat5', price: 190, desc: 'Flexible Cat5 cable, easy to manage.', image: 'cat52.jpg' },
+  { id: 5, name: 'Ethernet Cable Cat6 - 5m', type: 'Cat6', price: 200, desc: 'Cat6 cable with reduced interference.', image: 'cat62.jpg' },
+  { id: 6, name: 'Ethernet Cable Cat7 - 6m', type: 'Cat7', price: 210, desc: 'Cat7 shielded cable for noise reduction.', image: 'cat72.jpg' },
+  { id: 7, name: 'Ethernet Cable Cat5 - 7m', type: 'Cat5', price: 220, desc: 'Affordable Cat5 cable for light use.', image: 'cat54.jpg' },
+  { id: 8, name: 'Ethernet Cable Cat6 - 8m', type: 'Cat6', price: 230, desc: 'Professional-grade Cat6 cable.', image: 'cat63.jpg' },
+  { id: 9, name: 'Ethernet Cable Cat7 - 9m', type: 'Cat7', price: 240, desc: 'Cat7 cable with strong shielding.', image: 'cat73.jpg' },
+  { id: 10, name: 'Ethernet Cable Cat5 - 10m', type: 'Cat5', price: 250, desc: 'Reliable Cat5 cable for everyday use.', image: 'cat55.jpg' },
+  { id: 11, name: 'Ethernet Cable Cat6 - 11m', type: 'Cat6', price: 260, desc: 'Cat6 cable supporting gigabit speed.', image: 'cat64.jpg'},
+  { id: 12, name: 'Ethernet Cable Cat7 - 12m', type: 'Cat7', price: 270, desc: 'Long Cat7 cable for complex networks.', image: 'cat74.jpg' },
+  { id: 13, name: 'Ethernet Cable Cat5 - 13m', type: 'Cat5', price: 280, desc: 'Cat5 with easy-plug RJ45 connectors.', image: 'cat57.jpg' },
+  { id: 14, name: 'Ethernet Cable Cat6 - 14m', type: 'Cat6', price: 290, desc: 'Strong and reliable Cat6 cable.', image: 'cat65.jpg' },
+  { id: 15, name: 'Ethernet Cable Cat7 - 15m', type: 'Cat7', price: 300, desc: 'Cat7 for high-performance networks.', image: 'cat75.jpg' },
+  { id: 16, name: 'Ethernet Cable Cat5 - 16m', type: 'Cat5', price: 310, desc: 'Budget Cat5 cable with decent speed.', image: 'cat58.jpg' },
+  { id: 17, name: 'Ethernet Cable Cat6 - 17m', type: 'Cat6', price: 320, desc: 'Long-distance Cat6 cable.', image: 'cat66.jpg' },
+  { id: 18, name: 'Ethernet Cable Cat7 - 18m', type: 'Cat7', price: 330, desc: 'Premium shielded Cat7 cable.', image: 'cat76.jpg' },
+  { id: 19, name: 'Ethernet Cable Cat5 - 19m', type: 'Cat5', price: 340, desc: 'Cat5 cable ideal for low-bandwidth setups.', image: 'cat56.jpg' },
+  { id: 20, name: 'Ethernet Cable Cat6 - 20m', type: 'Cat6', price: 350, desc: 'Professional Cat6 cable for IT infrastructure.', image: 'cat67.jpg' }
+];
+
+
+  function renderItems() {
+    let filtered = [...mockData];
+    const type = filter.value;
+    const sortOrder = sort.value;
+
+    if (type !== 'All') {
+      filtered = filtered.filter(item => item.type === type);
+    }
+
+    filtered.sort((a, b) => sortOrder === 'asc' ? a.price - b.price : b.price - a.price);
+
+    itemContainer.innerHTML = '';
+    filtered.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'item-card grocery-card';
+      card.dataset.name = item.name;
+      card.dataset.price = item.price;
+      card.innerHTML = `
+        <img src="${item.image}" alt="${item.name}" />
+        <h4>${item.name}</h4>
+        <p>Type: ${item.type}</p>
+        <p>Price: ₹${item.price}</p>
+        <button class="add-to-cart">Add to Cart</button>
+      `;
+      card.addEventListener('click', () => showDetails(item));
+      itemContainer.appendChild(card);
+    });
+
+    addCartEventListeners(); // attach add-to-cart events after rendering
+  }
+
+  function showDetails(item) {
+    modalContent.innerHTML = `
+      <div class="modal-box">
+        <img src="${item.image}" alt="${item.name}" />
+        <div class="info">
+          <h2>${item.name}</h2>
+          <p>${item.desc}</p>
+          <p><strong>Type:</strong> ${item.type}</p>
+          <p><strong>Price:</strong> ₹${item.price}</p>
+          <button class="close-btn">Close</button>
+        </div>
+      </div>
+    `;
+    modal.style.display = 'flex';
+
+    document.querySelector('.close-btn').addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+  }
+
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+
+  filter.addEventListener('change', renderItems);
+  sort.addEventListener('change', renderItems);
+  renderItems();
+
+  // Cart Logic
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  const cartItemsContainer = document.getElementById('cartItems');
+  const totalPriceElement = document.getElementById('totalPrice');
+  const cartCountElement = document.getElementById('cartCount');
+  const notification = document.getElementById('CartNotification');
+  const cartSidebar = document.getElementById('cartSidebar');
+
+  document.getElementById('cartToggle').onclick = () => cartSidebar.classList.add('open');
+  document.getElementById('closeCart').onclick = () => cartSidebar.classList.remove('open');
+
+  function showToast(message) {
+    notification.textContent = message;
+    notification.classList.remove('hide');
+    notification.classList.add('show');
+
+    setTimeout(() => {
+      notification.classList.remove('show');
+      notification.classList.add('hide');
+    }, 2000);
+  }
+
+  function updateCartUI() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+    cartItemsContainer.innerHTML = '';
+
+    let total = 0;
+    let totalQty = 0;
+
+    if (cart.length === 0) {
+      cartItemsContainer.innerHTML = '<li class="empty-message">Your cart is empty</li>';
+      totalPriceElement.textContent = '0.00';
+      cartCountElement.textContent = '0';
+      return;
+    }
+
+    cart.forEach(item => {
+      total += item.price * item.quantity;
+      totalQty += item.quantity;
+
+      const li = document.createElement('li');
+      li.classList.add('cart-item');
+      li.innerHTML = `
+        <img src="${item.image}" alt="${item.name}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;">
+        <div class="cart-item-details">
+          <strong>${item.name}</strong><br>₹${item.price}
+        </div>
+        <div class="cart-item-controls">
+          <button onclick="changeQty('${item.name}', 1)">+</button>
+          <span>${item.quantity}</span>
+          <button onclick="changeQty('${item.name}', -1)">−</button>
+          <button onclick="removeFromCart('${item.name}')">🗑</button>
+        </div>
+      `;
+      cartItemsContainer.appendChild(li);
+    });
+
+    totalPriceElement.textContent = total.toFixed(2);
+    cartCountElement.textContent = totalQty;
+  }
+
+  window.changeQty = function(name, amount) {
+    const item = cart.find(i => i.name === name);
+    if (item) {
+      item.quantity += amount;
+      if (item.quantity <= 0) {
+        cart = cart.filter(i => i.name !== name);
+      }
+      updateCartUI();
+    }
+  }
+
+  window.removeFromCart = function(name) {
+    cart = cart.filter(i => i.name !== name);
+    updateCartUI();
+  }
+
+  function addCartEventListeners() {
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const card = e.target.closest('.grocery-card');
+        const name = card.dataset.name;
+        const price = parseFloat(card.dataset.price);
+        const image = card.querySelector('img').getAttribute('src');
+
+        const existingItem = cart.find(item => item.name === name);
+        if (existingItem) {
+          existingItem.quantity += 1;
+        } else {
+          cart.push({ name, price, image, quantity: 1 });
+        }
+
+        updateCartUI();
+        showToast(`${name} added to cart ✅`);
+      });
+    });
+  }
+
+  updateCartUI();
+
+  const orderNowBtn = document.getElementById('orderNowBtn');
+  if (orderNowBtn) {
+    orderNowBtn.addEventListener('click', () => {
+      if (cart.length === 0) {
+        showToast('Your cart is empty!');
+        return;
+      }
+
+      const message = generateOrderMessage();
+      const phoneNumbers = ['8667322876','8144815213'];
+
+      phoneNumbers.forEach((phone, index) => {
+        setTimeout(() => {
+          const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+          window.open(url, '_blank');
+        }, index * 800);
+      });
+    });
+  }
+
+  function generateOrderMessage() {
+    let message = '🛒 *New Ethernet Cables*\n\n*Items:*\n';
+    cart.forEach(item => {
+      message += `- ${item.name} x${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}\n`;
+    });
+
+    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    message += `\n💰 *Total: ₹${total.toFixed(2)}*\n\n🙏 Thank you!`;
+    return message;
+  }
+});
+</script>
+
+
+
+    </body>
+</html>
